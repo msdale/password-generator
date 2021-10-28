@@ -1,4 +1,4 @@
-# Password Generator Starter Code
+# Password Generator
 
 ## Website
 https://msdale.github.io/password-generator/
