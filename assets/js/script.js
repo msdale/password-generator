@@ -148,7 +148,7 @@ var generateBtn = document.querySelector("#generate");
 function writePassword() {
   var password = generatePassword();
 
-  // if null password...
+  // if null password...this should never happen
   if (!password) {
     alert("Try again")
     throw "Try again";
