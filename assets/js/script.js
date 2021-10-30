@@ -1,3 +1,4 @@
+// START - generate password
 /** Generate a password.
  * Can generate a password with some choices.
  * In particular:
@@ -12,9 +13,11 @@
  * 128.  Within that rule, you still can choose the length.
  */
 var generatePassword = function () {
+
+  // START - password length
   var pwdLen = prompt("Enter desired length of the password...\n" +
     "    Must be 8 to 128 characters in length.");
-  // if not null...eliminate any whitespace
+  // if not cancelled...eliminate any whitespace
   if (pwdLen) { 
     pwdLen = pwdLen.split(/\s+/).join('').toLowerCase();
   }
@@ -26,7 +29,7 @@ var generatePassword = function () {
     && pwdLen <= 128)                 // 128 or less
   {
     if (!confirm("Please confirm the password length of: " + pwdLen)) {
-      alert("password length was not confirmed");
+      alert("Password length was not confirmed...no password will be generated.");
       throw "Password Length Not Confirmed";
     }
   }
@@ -36,14 +39,16 @@ var generatePassword = function () {
     throw "No Password Length Entered";
   } else if (typeof pwdLen != "number") // entered a non-numeric value
   {
-    alert("The password length value must be a number >= 8 and <= 128");
+    alert("The password length value must be a number >= 8 and <= 128...no password will be generated.");
     throw "Password Length Entered Is A Non-numeric Value";
   } else if (pwdLen < 8 || pwdLen > 128) // entered a value outside the proper range
   {
-    alert("The password length value must be a number >= 8 and <= 128");
+    alert("The password length value must be a number >= 8 and <= 128...no password will be generated.");
     throw "Password Length Entered Is A Value Out-Of-Range";
   }
+  // END - password length
 
+  // START - character types
   var charTypes = prompt("Enter desired character types...\n" +
     "(default='a' for all character types)\n\n" +
     "Options are:\n" +
@@ -57,38 +62,43 @@ var generatePassword = function () {
     " 'ls' (lower and special)\n" +
     " 'luns', '', or 'a'(default) for all types");
 
-  // clean up any white space in the character types string
-  var cleanCT = charTypes.split(/\s+/).join('').toLowerCase();
+  // if not cancelled...eliminate any white space
+  if (charTypes) {
+    charTypes = charTypes.split(/\s+/).join('').toLowerCase();
+  }
 
-  // set the default (all character types) if necessary
-  cleanCT = cleanCT || 'a';
+  // if cancelled or only whitespace entered...
+  if (charTypes === null || charTypes === "") { // terminate process
+    alert("No character types were entered...no password will be generated.");
+    throw "No Character Types Entered";
+  }
 
+  // preserve only allowed character types in a "clean" character type string
   var allowedCharTypes = "lunsa";
-
-  // peserve only allowed character types
-  var newCT = "";
+  var cleanCT = "";
   for (var i = 0; i < allowedCharTypes.length; i++) {
-    if (cleanCT.includes(allowedCharTypes[i])) {
+    if (charTypes.includes(allowedCharTypes[i])) {
       if (allowedCharTypes[i] === 'a') {
-        newCT = "luns";
+        cleanCT = "luns";
         break;
       }
-      newCT += allowedCharTypes[i];
+      cleanCT += allowedCharTypes[i];
     }
   }
 
-  // return NULL if no allowed character types found...
+  // if no allowed character types found...
+  // just terminate...
   // no recursion to guard against "stack smashing"
   var confirmationInfo = "";
-  if (newCT.length === 0) {
-    alert("NO allowed character types ('l','u','n','s') where recorded in your request");
+  if (cleanCT.length === 0) { // no allowed character types entered
+    alert("NO allowed character types ('l','u','n','s') where recorded in your request...no password will be generated.");
     throw "No Character Types Recorded";
-  } else {
+  } else { // confirm password length (again) and allowed character types only
     var confirmationStmt = "Confirm that this is the password length, and character types you are requesting...\n\n";
     confirmationInfo += "Password Length: " + pwdLen + "\n";
     confirmationInfo += "Character Types:\n";
-    for (var i = 0; i < newCT.length; i++) {
-      switch (newCT[i]) {
+    for (var i = 0; i < cleanCT.length; i++) {
+      switch (cleanCT[i]) {
         case 'l':
           confirmationInfo += "  • lowercase characters\n";
           break;
@@ -102,33 +112,36 @@ var generatePassword = function () {
           confirmationInfo += "  • special characters\n";
           break;
         default:
-          alert("some alien character slipped by the clean up...here is the character types abbr string [" + newCT[i] + "]\n");
+          alert("some alien character slipped by the clean up...here is the character types abbr string [" + cleanCT[i] + "]...YIKES\n");
           throw "Alien Character Slipped In...WATCH OUT!";
       }
     }
+    // final confirmation
     if (!confirm(confirmationStmt + confirmationInfo)) {
-      alert("This password generation configuration is NOT confirmed...\n\n" + confirmationInfo);
+      alert("This password generation configuration is NOT confirmed...no password will be generated.\n\n" + confirmationInfo + "\n");
       throw "Password Generation Configuration Not Confirmed";
-    } else {
+    } else { // security alert
       alert("Your password will appear in the box...\nCopy it and secure it, then terminate this page");
     }
   }
+  // END - character types
 
+  // START - generate password according to configuration entered
   // construct full string of all choices of character types
   var fullStr = "";
-  if (newCT.includes('l')) {
+  if (cleanCT.includes('l')) {
     // add all lowercase characters to the full string
     fullStr += "abcdefghijklmnopqrstuvwxyz";
   }
-  if (newCT.includes('u')) {
+  if (cleanCT.includes('u')) {
     // add all uppercase characters to the full string
     fullStr += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   }
-  if (newCT.includes('n')) {
+  if (cleanCT.includes('n')) {
     // add all numeric characters to the full string
     fullStr += "0123456789";
   }
-  if (newCT.includes('s')) {
+  if (cleanCT.includes('s')) {
     // add all special characters to the full string
     fullStr += "!#$%&'\"()*+,-./:;<=>?@[\]^_`{|}~";
   }
@@ -138,26 +151,26 @@ var generatePassword = function () {
   for (var i = 0; i < pwdLen; i++) {
     PWD += fullStr.charAt(Math.floor(Math.random() * fullStr.length));
   }
-  return PWD;
+  // END - generate password according to configuration entered
+
+  return PWD; // and there's the password
 };
+// END - generate password
 
-// Get references to the #generate element
-var generateBtn = document.querySelector("#generate");
-
+// START - write password
 /** Write password to the #password input */
 function writePassword() {
   var password = generatePassword();
-
-  // if null password...this should never happen
-  if (!password) {
-    alert("Try again")
-    throw "Try again";
-  }
-
   var passwordText = document.querySelector("#password");
-
   passwordText.value = password;
 };
+// END - write password
 
-// Add event listener to generate button
+// START global scope
+// Get references to the #generate element
+var generateBtn = document.querySelector("#generate");
+
+
+// Add event listener to generate button and add writePassword()
 generateBtn.addEventListener("click", writePassword);
+// END - global scope
