@@ -56,11 +56,12 @@ var generatePassword = function () {
     " (u)pper case\n" +
     " (n)umeric\n" +
     " (s)pecial\n" +
+    " (a)ll\n" +
     "Type first character abbr for each type\n" +
     " some examples:\n" +
     " 'lu' (lower and upper)\n" +
     " 'ls' (lower and special)\n" +
-    " 'luns', '', or 'a'(default) for all types");
+    " 'luns' or 'a' for all types");
 
   // if not cancelled...eliminate any white space
   if (charTypes) {
