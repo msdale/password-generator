@@ -4,4 +4,4 @@
 https://msdale.github.io/password-generator/
 
 ## URL image
-![Password-Generator](/pictures/password-geenerator.png)
+![Password-Generator](./assets/images/password-geenerator.png)
