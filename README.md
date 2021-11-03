@@ -8,3 +8,6 @@ https://msdale.github.io/password-generator/
 
 ### Instructions
 #### (1) Press Generate-Password Button
+#### (2) Enter password length
+
+![Choose password length](.assets/images/choose-password-length)
