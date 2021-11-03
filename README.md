@@ -7,4 +7,4 @@ https://msdale.github.io/password-generator/
 ![Password-Generator](./assets/images/password-generator.png)
 
 ### Instructions
-#### Press Generate-Password Button
+#### (1) Press Generate-Password Button
