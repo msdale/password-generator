@@ -49,19 +49,14 @@ var generatePassword = function () {
   // END - password length
 
   // START - character types
-  var charTypes = prompt("Enter desired character types...\n" +
-    "(default='a' for all character types)\n\n" +
-    "Options are:\n" +
-    " (l)ower case\n" +
-    " (u)pper case\n" +
-    " (n)umeric\n" +
-    " (s)pecial\n" +
-    " (a)ll\n" +
-    "Type first character abbr for each type\n" +
-    " some examples:\n" +
-    " 'lu' (lower and upper)\n" +
-    " 'ls' (lower and special)\n" +
-    " 'luns' or 'a' for all types");
+  var charTypes = prompt("Enter desired character types. Options are:\n\n" +
+    " (l)ower case   " +
+    " (u)pper case   " +
+    " (n)umeric   " +
+    " (s)pecial   " +
+    " (a)ll\n\n" +
+    "Type first character abbr for each type, for example:\n\n" +
+    " 'lu' (for lower and upper)  or  'a' (for all types)\n");
 
   // if not cancelled...eliminate any white space
   if (charTypes) {
@@ -95,7 +90,7 @@ var generatePassword = function () {
     alert("NO allowed character types ('l','u','n','s') where recorded in your request...no password will be generated.");
     throw "No Character Types Recorded";
   } else { // confirm password length (again) and allowed character types only
-    var confirmationStmt = "Confirm that this is the password length, and character types you are requesting...\n\n";
+    var confirmationStmt = "Confirm your choices...\n\n";
     confirmationInfo += "Password Length: " + pwdLen + "\n";
     confirmationInfo += "Character Types:\n";
     for (var i = 0; i < cleanCT.length; i++) {
